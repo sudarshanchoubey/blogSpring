@@ -22,6 +22,8 @@ public class BlogApplication implements CommandLineRunner {
     try {
       jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS posts (id uuid NOT NULL, title character varying(100) NOT NULL,createtime timestamp with time zone NOT NULL,updatetime timestamp with time zone NOT NULL)");
       jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS post_content (id uuid, content text)");
+      jdbcTemplate.execute("INSERT into posts values('fcd171ef-8dd2-4ceb-afcd-41e29d2c6824' ,'First Test Post', '1999-01-01 02:05:06+05:30', '1999-01-01 02:05:06+05:30')");
+      jdbcTemplate.execute("INSERT into post_content values('fcd171ef-8dd2-4ceb-afcd-41e29d2c6824', '#First Post \n## This is the first post')");
     } catch(DataAccessException dae) {
       System.out.println("Failed to create tables quitting");
       dae.printStackTrace();

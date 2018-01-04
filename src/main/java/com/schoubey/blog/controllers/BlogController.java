@@ -14,11 +14,17 @@ public class BlogController {
     @Autowired
     private PostRepository postRepository;
 
-    @RequestMapping("/")
+    @GetMapping("/")
     String home(@RequestParam(value="name", required = false, defaultValue = "World") String name, Model model) {
         model.addAttribute("name", name);
         model.addAttribute("posts", postRepository.getAllPosts());
         return "index";
+    }
+
+    @GetMapping("/posts/{id}")
+    String showPost(@PathVariable String id, Model model) {
+        model.addAttribute("postContent", postRepository.getPostContent(id));
+        return "post";
     }
 
     @RequestMapping("/time")

@@ -37,5 +37,6 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 	compile("org.postgresql:postgresql:9.4-1206-jdbc42")
 	compile("com.h2database:h2")
+	compile('com.github.rjeschke:txtmark:0.13')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

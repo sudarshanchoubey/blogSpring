@@ -41,5 +41,5 @@ public class PostLine {
 
 
 
-  public static DateTimeFormatter postDTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ssxxx");
+  public static DateTimeFormatter postDTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nxxx");
 }
