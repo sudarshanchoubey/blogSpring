@@ -1,11 +1,18 @@
 package com.schoubey.blog.controllers;
 
+import com.schoubey.blog.model.Post;
+import com.schoubey.blog.model.PostContent;
 import com.schoubey.blog.repo.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.stereotype.*;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.ZonedDateTime;
+import java.util.Map;
 
 @Controller
 @EnableAutoConfiguration
@@ -15,8 +22,7 @@ public class BlogController {
     private PostRepository postRepository;
 
     @GetMapping("/")
-    String home(@RequestParam(value="name", required = false, defaultValue = "World") String name, Model model) {
-        model.addAttribute("name", name);
+    String home(Model model) {
         model.addAttribute("posts", postRepository.getAllPosts());
         return "index";
     }
@@ -27,7 +33,36 @@ public class BlogController {
         return "post";
     }
 
-    @RequestMapping("/time")
+    @GetMapping("/post")
+    String showForm(@RequestParam(value="id", required = false, defaultValue = "") String id, Model model) {
+        if (id.equals("")) {
+            model.addAttribute("post", null);
+            return "editPost";
+        } else {
+            return "redirect:";
+        }
+    }
+
+    @PostMapping(path = "/posts", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
+    String savePost(@RequestParam Map<String, String> paramMap) {
+        if (paramMap == null) {
+            return "redirect:post";
+        }
+        if (paramMap.get("id").equals("")) {
+            String id = java.util.UUID.randomUUID().toString();
+            ZonedDateTime now = ZonedDateTime.now();
+            Post post = new Post(
+              id,
+              paramMap.get("title").toString(),
+              paramMap.get("content").toString(),
+              now, now
+            );
+            postRepository.savePost(post);
+        }
+        return "redirect:";
+    }
+
+    @RequestMapping(value = "/time")
     @ResponseBody
     String time() {
       return java.time.ZonedDateTime.now().toString();

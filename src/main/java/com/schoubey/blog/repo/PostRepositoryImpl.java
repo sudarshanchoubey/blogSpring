@@ -1,6 +1,7 @@
 package com.schoubey.blog.repo;
 
 import com.github.rjeschke.txtmark.Processor;
+import com.schoubey.blog.model.Post;
 import com.schoubey.blog.model.PostContent;
 import com.schoubey.blog.model.PostLine;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,17 @@ public class PostRepositoryImpl implements PostRepository {
       return new PostContent(id, Processor.process(content), title);
     }
 
-
+    @Override
+    public void savePost(Post post) {
+        jdbcTemplate.update("INSERT into posts(id, title, createTime, updateTime) values(?, ?, ?, ?)",
+          new Object[]{post.getId(),
+                       post.getTitle(),
+                       post.getCreateTime().format(PostLine.postDTF),
+                       post.getUpdateTime().format(PostLine.postDTF)
+        });
+        jdbcTemplate.update("INSERT into post_content(id, content) values(?, ?)",
+          new Object[]{post.getId(),
+            post.getContent()
+        });
+    }
 }

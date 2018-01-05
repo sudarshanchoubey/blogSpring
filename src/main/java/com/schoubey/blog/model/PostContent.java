@@ -5,6 +5,18 @@ public class PostContent {
   private String content;
   private String title;
 
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
   public PostContent(String id, String content, String title) {
     this.id = id;
     this.content = content;
