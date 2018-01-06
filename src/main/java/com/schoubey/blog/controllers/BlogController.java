@@ -10,13 +10,15 @@ import org.springframework.boot.autoconfigure.*;
 import org.springframework.stereotype.*;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.ZonedDateTime;
 import java.util.Map;
 
 @Controller
 @EnableAutoConfiguration
-public class BlogController {
+public class BlogController implements WebMvcConfigurer {
 
     @Autowired
     private PostRepository postRepository;
@@ -80,6 +82,12 @@ public class BlogController {
     String time() {
       return java.time.ZonedDateTime.now().toString();
     }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
+    }
+
 
 }
 

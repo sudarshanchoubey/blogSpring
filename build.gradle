@@ -39,5 +39,7 @@ dependencies {
 	compile("com.h2database:h2")
 	compile('com.github.rjeschke:txtmark:0.13')
 	compile("org.springframework.boot:spring-boot-devtools")
+	compile("org.springframework.boot:spring-boot-starter-security")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4")
 }
