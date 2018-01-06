@@ -13,8 +13,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div th:replace="header :: header"></div>
 <div class="container-fluid">
-    <h1 th:text="${postContent.title}"></h1>
     <p th:utext="${postContent.content}"/>
 </div>
 </body>
