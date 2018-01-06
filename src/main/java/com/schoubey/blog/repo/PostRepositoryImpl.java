@@ -1,8 +1,6 @@
 package com.schoubey.blog.repo;
 
-import com.schoubey.blog.model.Post;
-import com.schoubey.blog.model.PostContent;
-import com.schoubey.blog.model.PostLine;
+import com.schoubey.blog.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
