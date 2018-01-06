@@ -12,4 +12,5 @@ public interface PostRepository {
     public LinkedList<PostLine> getAllPosts();
     public PostContent getPostContent(String id);
     public void savePost(Post post);
+    public void updatePost(Post post);
 }

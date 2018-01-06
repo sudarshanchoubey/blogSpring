@@ -19,6 +19,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
+
 <h3 th:text="${post.title}" th:if="${post}"></h3>
 <h3 th:unless="${post}">Create a post</h3>
 <form action="#" th:action="@{/posts}" th:object="${post}" method="post">

@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <h1 th:text="'Hello, ' + ${postContent.title}"></h1>
+    <h1 th:text="${postContent.title}"></h1>
     <p th:utext="${postContent.content}"/>
 </div>
 </body>

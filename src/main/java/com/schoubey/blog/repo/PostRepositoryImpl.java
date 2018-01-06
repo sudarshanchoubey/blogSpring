@@ -1,6 +1,5 @@
 package com.schoubey.blog.repo;
 
-import com.github.rjeschke.txtmark.Processor;
 import com.schoubey.blog.model.Post;
 import com.schoubey.blog.model.PostContent;
 import com.schoubey.blog.model.PostLine;
@@ -49,20 +48,34 @@ public class PostRepositoryImpl implements PostRepository {
             rs.first();
             return rs.getString("content");
           });
-      return new PostContent(id, Processor.process(content), title);
+      return new PostContent(id, content, title);
     }
 
     @Override
     public void savePost(Post post) {
         jdbcTemplate.update("INSERT into posts(id, title, createTime, updateTime) values(?, ?, ?, ?)",
-          new Object[]{post.getId(),
-                       post.getTitle(),
-                       post.getCreateTime().format(PostLine.postDTF),
-                       post.getUpdateTime().format(PostLine.postDTF)
-        });
+          post.getId(),
+          post.getTitle(),
+          post.getCreateTime().format(PostLine.postDTF),
+          post.getUpdateTime().format(PostLine.postDTF));
+
         jdbcTemplate.update("INSERT into post_content(id, content) values(?, ?)",
-          new Object[]{post.getId(),
-            post.getContent()
+          post.getId(),
+          post.getContent());
+    }
+
+    @Override
+    public void updatePost(Post post) {
+        jdbcTemplate.update("UPDATE posts SET title = ?, updateTime = ? WHERE id = ?",
+          new Object[]{
+            post.getTitle(),
+            post.getUpdateTime().format(PostLine.postDTF),
+            post.getId()
+        });
+        jdbcTemplate.update("UPDATE post_content SET content=? WHERE id = ?",
+          new Object[]{
+            post.getContent(),
+            post.getId()
         });
     }
 }

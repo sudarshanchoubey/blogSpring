@@ -29,7 +29,7 @@ public class BlogController {
 
     @GetMapping("/posts/{id}")
     String showPost(@PathVariable String id, Model model) {
-        model.addAttribute("postContent", postRepository.getPostContent(id));
+        model.addAttribute("postContent", PostContent.processContent(postRepository.getPostContent(id)));
         return "post";
     }
 
@@ -39,7 +39,9 @@ public class BlogController {
             model.addAttribute("post", null);
             return "editPost";
         } else {
-            return "redirect:";
+            PostContent postContent = postRepository.getPostContent(id);
+            model.addAttribute("post", postContent);
+            return "editPost";
         }
     }
 
@@ -58,6 +60,17 @@ public class BlogController {
               now, now
             );
             postRepository.savePost(post);
+        } else {
+            String id = paramMap.get("id");
+            ZonedDateTime now = ZonedDateTime.now();
+            Post post = new Post(
+              id,
+              paramMap.get("title").toString(),
+              paramMap.get("content").toString(),
+              now, now
+            );
+            postRepository.updatePost(post);
+            return "redirect:/posts/" + id;
         }
         return "redirect:";
     }
